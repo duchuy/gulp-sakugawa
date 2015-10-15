@@ -39,12 +39,12 @@ module.exports = function gulpSakugawa(opts) {
 
       var pages = sakugawa(css, options);
       var imports = "";
-      
 
-      pages.forEach(function (page, index) {
-      	var cssFileName = chunk.relative.replace(/\.css$/, '') + suffix + (index + 1) + '.css';
-      	
-      	imports = imports + "@import '" + cssFileName + "';\n";
+
+      pages.forEach(function(page, index) {
+        var cssFileName = chunk.relative.replace(/\.css$/, '') + suffix + (index + 1) + '.css';
+
+        imports = imports + "@import '" + cssFileName + "';\n";
 
         // add new source map file to stream
         var cssFile = new File({
@@ -57,15 +57,16 @@ module.exports = function gulpSakugawa(opts) {
         _self.push(cssFile);
       });
 
-      if(options.addImport) {
-		    var cssFile = new File({
-	        cwd: chunk.cwd,
-	        base: chunk.base,
-	        path: path.join(chunk.base, '', chunk.relative),
-	        contents: new Buffer(imports)
-	      });
-			}
-	    _self.push(cssFile);
+      if (options.addImport) {
+        var cssFile = new File({
+          cwd: chunk.cwd,
+          base: chunk.base,
+          path: path.join(chunk.base, '', chunk.relative),
+          contents: new Buffer(imports)
+        });
+        _self.push(cssFile);
+      }
+
     }
     return cb();
   });
